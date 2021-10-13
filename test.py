@@ -84,6 +84,57 @@
 #     def make_sound(self, object_type):
 #         return eval(object_type)().do_say()
 
+# 工厂方法模式
+from abc import ABCMeta, abstractmethod
+
+class Section(metaclass=ABCMeta):
+    @abstractmethod
+    def describe(self):
+        pass
+
+class PersonalSection(Section):
+    def describe(self):
+        print("Personal Section")
+
+class AlbumSection(Section):
+    def describe(self):
+        print("Album Section")
+    
+class PatentSection(Section):
+    def describe(self):
+        print("Patent Section")
+
+class PublictionSection(Section):
+    def describe(self):
+        print("publiction Section")
+
+class Profile(object):
+    def __init__(self):
+        self.sections = []
+        self.create_profile()
+
+    @abstractmethod
+    def create_profile(self):
+        pass
+
+    def get_sections(self):
+        return self.sections
+    
+    def add_sections(self, section):
+        self.sections.append(section)
+    
+class Linkedin(Profile):
+    def create_profile(self):
+        self.add_sections(PersonalSection)
+        self.add_sections(PatentSection)
+        self.add_sections(PublictionSection)
+
+class Facebook(Profile):
+    def create_profile(self):
+        self.add_sections(PersonalSection)
+        self.add_sections(AlbumSection)
+
+# 抽象工厂模式
 from abc import ABCMeta, abstractmethod
 
 class PizzaFactory(metaclass=ABCMeta):
