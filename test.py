@@ -207,6 +207,116 @@ class PizzaStory(object):
             self.VegPizza.prepare()
             self.NovVegPizza.serve(self.VegPizza)
 
+# 门面模式
+class EventManager(object):
+
+    def __init__(self):
+        print("event manager")
+
+    def arrange(self):
+        self.hotelier = Hotelier()
+        self.hotelier.bookHotel()
+
+        self.florist = Florist()
+        self.florist.setFlowerRequirements()
+
+        self.caterer = Caterer()
+        self.caterer.setCuisine()
+
+        self.musician = Musician()
+        self.musician.setMusicType()
+
+class Hotelier(object):
+    def __init__(self):
+        print("array arrived!")
+
+    def bookHotel(self):
+        pass
+
+class Florist(object):
+    def bookHotel(self):
+        print("book hotel")
+
+    def setFlowerRequirements(self):
+        pass
+
+class Caterer(object):
+    def setFlowerRequirements():
+        print("set flower require ments")
+
+    def setCuisine(self):
+        pass
+
+class Musician(object):
+    def setMusicType(self):
+        print("set music type")
+
+# class Your(object):
+#     def __init__(self):
+#         print("You whoa!")
+
+#     def askEventManager(self):
+#         print("You: Let's Contact the Event")
+#         em = EventManager()
+#         em.arrange()
+
+#     def __del__(self):
+#         print("you del！")
+
+# class Test:
+#     def __del__(self):
+#         print("exit")
+
+ ABCMeta, abstractmethod
+
+class You(object):
+    def __init__(self):
+        self.debitCard = DebitCard()
+        self.ispurchased = None
+
+    def make_payment(self):
+        self.ispurchased =  self.debitCard.do_pay()
+    
+    def __del__(self):
+        if self.ispurchased:
+            print("yes")
+        else:
+            print("no")
+
+class Payment(metaclass=ABCMeta):
+
+    @abstractmethod
+    def do_pay(self):
+        pass
+
+class Bank(Payment):
+
+    def __init__(self):
+        self.card = None
+        self.account = None
+
+    def __getAccount(self):
+        self.account = self.card
+        return self.account
+
+    def __hasFunds(self):
+        return True
+
+    def do_pay(self):
+        if self.__hasFunds():
+            return True
+        else:
+            return False
+
+class DebitCard(Payment):
+
+    def __init__(self):
+        self.bank = Bank()
+
+    def do_pay(self):
+        card = input()
+        self.bank.setCard(card)
+        return self.bank.do_pay()
 
 if __name__ == "__main__":
     # hc1 = HealthCheck()
@@ -217,7 +327,16 @@ if __name__ == "__main__":
     # temp = input("class name: ")
     # profile = eval(temp)()
     # print(profile.get_sections())
-    pizza = PizzaStory()
-    pizza.make_pizzas()
+    # pizza = PizzaStory()
+    # pizza.make_pizzas()
+    # you = Your()
+    # you.askEventManager()
+    # test = Test()
+    # del test
+    # print(123)
+    you = Your() 
+    you.make_payment()
+
+    
 
     
