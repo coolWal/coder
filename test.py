@@ -85,171 +85,171 @@
 #         return eval(object_type)().do_say()
 
 # 工厂方法模式
-from abc import ABCMeta, abstractmethod
+# from abc import ABCMeta, abstractmethod
 
-class Section(metaclass=ABCMeta):
-    @abstractmethod
-    def describe(self):
-        pass
+# class Section(metaclass=ABCMeta):
+#     @abstractmethod
+#     def describe(self):
+#         pass
 
-class PersonalSection(Section):
-    def describe(self):
-        print("Personal Section")
+# class PersonalSection(Section):
+#     def describe(self):
+#         print("Personal Section")
 
-class AlbumSection(Section):
-    def describe(self):
-        print("Album Section")
+# class AlbumSection(Section):
+#     def describe(self):
+#         print("Album Section")
     
-class PatentSection(Section):
-    def describe(self):
-        print("Patent Section")
+# class PatentSection(Section):
+#     def describe(self):
+#         print("Patent Section")
 
-class PublictionSection(Section):
-    def describe(self):
-        print("publiction Section")
+# class PublictionSection(Section):
+#     def describe(self):
+#         print("publiction Section")
 
-class Profile(object):
-    def __init__(self):
-        self.sections = []
-        self.create_profile()
+# class Profile(object):
+#     def __init__(self):
+#         self.sections = []
+#         self.create_profile()
 
-    @abstractmethod
-    def create_profile(self):
-        pass
+#     @abstractmethod
+#     def create_profile(self):
+#         pass
 
-    def get_sections(self):
-        return self.sections
+#     def get_sections(self):
+#         return self.sections
     
-    def add_sections(self, section):
-        self.sections.append(section)
+#     def add_sections(self, section):
+#         self.sections.append(section)
     
-class Linkedin(Profile):
-    def create_profile(self):
-        self.add_sections(PersonalSection)
-        self.add_sections(PatentSection)
-        self.add_sections(PublictionSection)
+# class Linkedin(Profile):
+#     def create_profile(self):
+#         self.add_sections(PersonalSection)
+#         self.add_sections(PatentSection)
+#         self.add_sections(PublictionSection)
 
-class Facebook(Profile):
-    def create_profile(self):
-        self.add_sections(PersonalSection)
-        self.add_sections(AlbumSection)
+# class Facebook(Profile):
+#     def create_profile(self):
+#         self.add_sections(PersonalSection)
+#         self.add_sections(AlbumSection)
 
-# 抽象工厂模式
-from abc import ABCMeta, abstractmethod
+# # 抽象工厂模式
+# from abc import ABCMeta, abstractmethod
 
-class PizzaFactory(metaclass=ABCMeta):
+# class PizzaFactory(metaclass=ABCMeta):
 
-    @abstractmethod
-    def createVegPizza(self):
-        pass
+#     @abstractmethod
+#     def createVegPizza(self):
+#         pass
 
-    @abstractmethod
-    def createNonVegPizza(self):
-        pass
+#     @abstractmethod
+#     def createNonVegPizza(self):
+#         pass
 
-class IndianPizzaFactory(PizzaFactory):
+# class IndianPizzaFactory(PizzaFactory):
     
-    def createVegPizza(self):
-        return DeluxVeggiePizza()
+#     def createVegPizza(self):
+#         return DeluxVeggiePizza()
 
-    def createNonVegPizza(self):
-        return ChickenPizza()
+#     def createNonVegPizza(self):
+#         return ChickenPizza()
 
 
-class USPizzaFactory(PizzaFactory):
+# class USPizzaFactory(PizzaFactory):
 
-    def createVegPizza(self):
-        return MexicanVegPizza()
+#     def createVegPizza(self):
+#         return MexicanVegPizza()
 
-    def createNonVegPizza(self):
-        return HamPizza()
+#     def createNonVegPizza(self):
+#         return HamPizza()
 
-class VegPizza(metaclass=ABCMeta):
+# class VegPizza(metaclass=ABCMeta):
 
-    @abstractmethod
-    def prepare(self, VegPizza):
-        pass
+#     @abstractmethod
+#     def prepare(self, VegPizza):
+#         pass
 
-class NonVegPizza(metaclass=ABCMeta):
-    @abstractmethod
-    def serve(self):
-        pass
+# class NonVegPizza(metaclass=ABCMeta):
+#     @abstractmethod
+#     def serve(self):
+#         pass
 
-class DeluxVeggiePizza(VegPizza):
+# class DeluxVeggiePizza(VegPizza):
     
-    def prepare(self):
-        print("prepare")
+#     def prepare(self):
+#         print("prepare")
 
-class ChickenPizza(NonVegPizza):
+# class ChickenPizza(NonVegPizza):
 
-    def serve(self, VegPizza):
-        print("serve", VegPizza)
+#     def serve(self, VegPizza):
+#         print("serve", VegPizza)
 
-class MexicanVegPizza(VegPizza):
+# class MexicanVegPizza(VegPizza):
     
-    def prepare(self): 
-        print("prepare")
+#     def prepare(self): 
+#         print("prepare")
 
-class HamPizza(NonVegPizza):
+# class HamPizza(NonVegPizza):
 
-    def serve(self, VegPizza):
-        print("prepare", type(VegPizza).__name__)
+#     def serve(self, VegPizza):
+#         print("prepare", type(VegPizza).__name__)
 
-class PizzaStory(object):
-    def __init__(self):
-        pass
+# class PizzaStory(object):
+#     def __init__(self):
+#         pass
 
-    def make_pizzas(self):
-        for factory in [USPizzaFactory()]:
-            self.factory = factory
-            self.NovVegPizza = self.factory.createNonVegPizza()
-            self.VegPizza = self.factory.createVegPizza()
-            self.VegPizza.prepare()
-            self.NovVegPizza.serve(self.VegPizza)
+#     def make_pizzas(self):
+#         for factory in [USPizzaFactory()]:
+#             self.factory = factory
+#             self.NovVegPizza = self.factory.createNonVegPizza()
+#             self.VegPizza = self.factory.createVegPizza()
+#             self.VegPizza.prepare()
+#             self.NovVegPizza.serve(self.VegPizza)
 
-# 门面模式
-class EventManager(object):
+# # 门面模式
+# class EventManager(object):
 
-    def __init__(self):
-        print("event manager")
+#     def __init__(self):
+#         print("event manager")
 
-    def arrange(self):
-        self.hotelier = Hotelier()
-        self.hotelier.bookHotel()
+#     def arrange(self):
+#         self.hotelier = Hotelier()
+#         self.hotelier.bookHotel()
 
-        self.florist = Florist()
-        self.florist.setFlowerRequirements()
+#         self.florist = Florist()
+#         self.florist.setFlowerRequirements()
 
-        self.caterer = Caterer()
-        self.caterer.setCuisine()
+#         self.caterer = Caterer()
+#         self.caterer.setCuisine()
 
-        self.musician = Musician()
-        self.musician.setMusicType()
+#         self.musician = Musician()
+#         self.musician.setMusicType()
 
-class Hotelier(object):
-    def __init__(self):
-        print("array arrived!")
+# class Hotelier(object):
+#     def __init__(self):
+#         print("array arrived!")
 
-    def bookHotel(self):
-        pass
+#     def bookHotel(self):
+#         pass
 
-class Florist(object):
-    def bookHotel(self):
-        print("book hotel")
+# class Florist(object):
+#     def bookHotel(self):
+#         print("book hotel")
 
-    def setFlowerRequirements(self):
-        pass
+#     def setFlowerRequirements(self):
+#         pass
 
-class Caterer(object):
-    def setFlowerRequirements():
-        print("set flower require ments")
+# class Caterer(object):
+#     def setFlowerRequirements():
+#         print("set flower require ments")
 
-    def setCuisine(self):
-        pass
+#     def setCuisine(self):
+#         pass
 
-class Musician(object):
-    def setMusicType(self):
-        print("set music type")
+# class Musician(object):
+#     def setMusicType(self):
+#         print("set music type")
 
 # class Your(object):
 #     def __init__(self):
@@ -338,7 +338,7 @@ if __name__ == "__main__":
     # test = Test()
     # del test
     # print(123)
-    you = You() 
+    you = You()
     you.make_payment()
 
     
