@@ -267,7 +267,8 @@ class Musician(object):
 #     def __del__(self):
 #         print("exit")
 
- ABCMeta, abstractmethod
+# 代理模式
+from abc import ABCMeta, abstractmethod
 
 class You(object):
     def __init__(self):
@@ -302,6 +303,9 @@ class Bank(Payment):
     def __hasFunds(self):
         return True
 
+    def setCard(self, card):
+        self.card = card
+
     def do_pay(self):
         if self.__hasFunds():
             return True
@@ -334,7 +338,7 @@ if __name__ == "__main__":
     # test = Test()
     # del test
     # print(123)
-    you = Your() 
+    you = You() 
     you.make_payment()
 
     
