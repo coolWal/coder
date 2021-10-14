@@ -338,7 +338,7 @@ if __name__ == "__main__":
     # test = Test()
     # del test
     # print(123)
-    you = You() 
+    you = You()
     you.make_payment()
 
     
