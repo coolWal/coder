@@ -269,6 +269,8 @@
 
 # 代理模式
 from abc import ABCMeta, abstractmethod
+from types import MethodWrapperType
+from typing import Sequence
 
 class You(object):
     def __init__(self):
@@ -407,8 +409,8 @@ class Subscriber(metaclass=ABCMeta):
         pass
 
 # 具体观察者
-class SMSSubscriber(object):
 
+class SMSSubscriber(object):
     def __init__(self, publisher):
         self.publisher = publisher
         self.publisher.attach(self)
@@ -424,6 +426,63 @@ class EmailSubscirber(object):
 
     def update(self):
         print(type(self).__name__, self.publisher.get_news())
+
+class Wizard(object):
+    def __init__(self, rootdir, src):
+        self.choices = []
+        self.rootdir = rootdir
+        self.src =  src
+
+    def preferences(self, command):
+        self.choices.append(command)
+
+    def execute(self):
+        for choice in self.choices:
+            if list(choice.values())[0]:
+                print self.src,self.rootdir
+
+            else:
+                print("no")
+
+# 命令模式
+from abc import ABCMeta, abstractmethod
+
+class Order(metaclass=ABCMeta):
+    
+    @abstractmethod
+    def excute(self):
+        pass
+
+class BuyStockOrder(Order):
+
+    def __init__(self, stock):
+        self.stock = stock
+    
+    def execute(self):
+        self.stock.buy()
+
+class SellStockOrder(Order):
+    def __init__(self, stock):
+        self.stock = stock
+
+    def excute(self, stock):
+        self.stock.sell()
+
+class StockTrade(object):
+    def buy(self):
+        print("you will buy stocks")
+
+    def sell(self):
+        print("you will sell stocks")
+
+class Agent(object):
+
+    def __init__(self):
+        self.__orderQueue = []
+
+    def placeOrder(self, order):
+        self.__orderQueue.append(order)
+        order.execute()
 
 if __name__ == "__main__":
     # hc1 = HealthCheck()
@@ -449,18 +508,22 @@ if __name__ == "__main__":
     # observer2 = Observer2(subject)
     # subject.notifyAll("notication")
     
-    news_publisher = NewPublisher()
-    for Subscriber in [SMSSubscriber, EmailSubscirber]:
-        Subscriber(news_publisher)
+    # news_publisher = NewPublisher()
+    # for Subscriber in [SMSSubscriber, EmailSubscirber]:
+    #     Subscriber(news_publisher)
     
-    news_publisher.add_news("hello world")
-    news_publisher.notifySubscribers()
+    # news_publisher.add_news("hello world")
+    # news_publisher.notifySubscribers()
 
-    print(news_publisher.subscribers())
+    # print(news_publisher.subscribers())
 
-    news_publisher.add_news("hello world2")
-    news_publisher.notifySubscribers()
+    # news_publisher.add_news("hello world2")
+    # news_publisher.notifySubscribers()
 
-    
+    stock = StockTrade()
+    buy_stock = BuyStockOrder(stock)
+    sell_stock = SellStockOrder(stock)
 
-    
+    agent = Agent()
+    agent.placeOrder(buy_stock)
+    agent.placeOrder(sell_stock)
