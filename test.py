@@ -322,6 +322,109 @@ class DebitCard(Payment):
         self.bank.setCard(card)
         return self.bank.do_pay()
 
+# LocalProxy代理
+from functools import partial
+from werkzeug.local import LocalProxy
+
+class Boss(object):
+
+    def pop(self):
+        print("ok")
+        return "ok"
+
+# 观察者模式
+class OtherObj(object):
+
+    def __init__(self, Obj):
+        self.real_obj = Obj()
+
+other = OtherObj(Boss)
+
+def get_boss(obj=None):
+    return obj.real_obj
+
+proxy_boss = LocalProxy(partial(get_boss, other))
+
+class Subject(object):
+
+    def __init__(self):
+        self.__observers = []
+
+    def register(self, observer):
+        self.__observers.append(observer)
+
+    def notifyAll(self, *args, **kwargs):
+        for observer in self.__observers:
+            observer.notify(self, *args, **kwargs)
+
+class Observer1(object):
+    def __init__(self, subject):
+        subject.register(self)
+
+    def notify(self, subject, *args):
+        print(type(self).__name__)
+
+class Observer2(object):
+    def __init__(self, subject):     
+        subject.register(self)
+
+    def notify(self, subject, *args):
+        print(type(self).__name__)
+
+from abc import abstractmethod
+
+# 主题
+class NewPublisher:
+    
+    def __init__(self):
+        self.__subscribers = list()
+        self.__latestNews = None
+
+    def attach(self, subscribers):
+        self.__subscribers.append(subscribers)
+
+    def detach(self):
+        return self.__subscribers.pop()
+
+    def subscribers(self):
+        return [type(x).__name__ for x in self.__subscribers]
+    
+    def notifySubscribers(self):
+        for sub in self.__subscribers:
+            sub.update()
+
+    def add_news(self, news):
+        self.__latestNews = news
+
+    def get_news(self):
+        return self.__latestNews
+
+# 观察者
+class Subscriber(metaclass=ABCMeta):
+
+    @abstractmethod
+    def update(self):
+        pass
+
+# 具体观察者
+class SMSSubscriber(object):
+
+    def __init__(self, publisher):
+        self.publisher = publisher
+        self.publisher.attach(self)
+    
+    def update(self):
+        print(type(self).__name__, self.publisher.get_news())
+
+class EmailSubscirber(object):
+    
+    def __init__(self, publisher):
+        self.publisher = publisher
+        self.publisher.attach(self)
+
+    def update(self):
+        print(type(self).__name__, self.publisher.get_news())
+
 if __name__ == "__main__":
     # hc1 = HealthCheck()
     # hc2 = HealthCheck()
@@ -338,8 +441,28 @@ if __name__ == "__main__":
     # test = Test()
     # del test
     # print(123)
-    you = You()
-    you.make_payment()
+    # you = You()
+    # you.make_payment()
+    # print(proxy_boss._get_current_object)
+    # subject = Subject()
+    # observer1 = Observer1(subject)
+    # observer2 = Observer2(subject)
+    # subject.notifyAll("notication")
+    
+    news_publisher = NewPublisher()
+    for Subscriber in [SMSSubscriber, EmailSubscirber]:
+        Subscriber(news_publisher)
+    
+    news_publisher.add_news("hello world")
+    news_publisher.notifySubscribers()
+
+    print(news_publisher.subscribers())
+
+    news_publisher.add_news("hello world2")
+    news_publisher.notifySubscribers()
+
+
+
 
     
 
