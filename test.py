@@ -500,7 +500,6 @@ if __name__ == "__main__":
     # test = Test()
     # del test
     # print(123)
-<<<<<<< HEAD
     # you = You()
     # you.make_payment()
     # print(proxy_boss._get_current_object)
