@@ -269,8 +269,12 @@
 
 # 代理模式
 from abc import ABCMeta, abstractmethod
+<<<<<<< HEAD
 from types import MethodWrapperType
 from typing import Sequence
+=======
+from sqlite3.dbapi2 import Date
+>>>>>>> f32d431 (modify test.py)
 
 class You(object):
     def __init__(self):
@@ -427,6 +431,7 @@ class EmailSubscirber(object):
     def update(self):
         print(type(self).__name__, self.publisher.get_news())
 
+<<<<<<< HEAD
 class Wizard(object):
     def __init__(self, rootdir, src):
         self.choices = []
@@ -483,6 +488,107 @@ class Agent(object):
     def placeOrder(self, order):
         self.__orderQueue.append(order)
         order.execute()
+=======
+
+# mvc模型
+# class Model(object):
+
+#     services = {
+#         "email":{"number":1000, "price": 2},
+#         "sms": {"number": 1000, "price": 10},
+#         "voice": {"number": 1000, "price": 15}
+#     }
+
+# class View(object):
+
+#     def list_services(self, services):
+#         for svc in services:
+#             print(svc)
+
+#     def list_pricing(self, services):
+#         for svc in services:
+#             print(svc)
+
+
+# class Controller(object):
+
+#     def __init__(self):
+#         self.model = Model()
+#         self.view = View()
+
+#     def get_services(self):
+#         services = self.model.services.keys()
+#         return self.view.list_services(services)
+
+#     def get_pricing(self):
+#         priceing = self.model.services.keys()
+#         return self.view.list_pricing(priceing)
+
+
+# class Client(object):
+#     controller = Controller()
+#     controller.get_services()
+#     controller.get_pricing()
+
+
+class Model(object):
+    def logic(self):
+        data = "Got it!"
+        return Date
+
+class View(object):
+    def update(self, data):
+        print("data", data)
+
+class Controller(object):
+
+    def __init__(self):
+        self.model = Model()
+        self.view = View()
+
+    def interface(self):
+        data = self.model.logic()
+        self.view.update(data)
+
+class Client(object):
+    controller = Controller()
+    controller.interface()
+
+
+import tornado
+import tornado.web
+import tornado.ioloop
+import tornado.httpserver
+import sqlite3
+
+# 模型
+class IndexHandler(tornado.web.RequestHandler):
+
+    def get(self):
+        self.render("index.html")
+    
+class NewHandler(tornado.web.RequestHandler):
+    def post(self):
+        pass
+
+class UpdateHandler(tornado.web.RequestHandler):
+    
+    def get(self):
+        pass
+
+class RunApp(tornado.web.Application):
+    # 控制器
+    def __init__(self):
+        Handlers = [
+            (r"/", IndexHandler),
+            (r"/new", NewHandler),
+            (r"/update", UpdateHandler),
+        ]
+        settings = dict(
+            debug=True
+        )
+        tornado.web.Application.__init__(self, Handlers, **settings)
+>>>>>>> f32d431 (modify test.py)
 
 if __name__ == "__main__":
     # hc1 = HealthCheck()
@@ -514,6 +620,7 @@ if __name__ == "__main__":
     
     # news_publisher.add_news("hello world")
     # news_publisher.notifySubscribers()
+<<<<<<< HEAD
 
     # print(news_publisher.subscribers())
 
@@ -523,6 +630,18 @@ if __name__ == "__main__":
     stock = StockTrade()
     buy_stock = BuyStockOrder(stock)
     sell_stock = SellStockOrder(stock)
+=======
+
+    # print(news_publisher.subscribers())
+
+    # news_publisher.add_news("hello world2")
+    # news_publisher.notifySubscribers()
+    print("开始运行")
+    http_server = tornado.httpserver.HTTPServer(RunApp())
+    http_server.listen(5000)
+    tornado.ioloop.IOLoop.instance().start()
+    
+>>>>>>> f32d431 (modify test.py)
 
     agent = Agent()
     agent.placeOrder(buy_stock)
