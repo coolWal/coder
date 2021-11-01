@@ -269,12 +269,10 @@
 
 # 代理模式
 from abc import ABCMeta, abstractmethod
-<<<<<<< HEAD
 from types import MethodWrapperType
 from typing import Sequence
-=======
+
 from sqlite3.dbapi2 import Date
->>>>>>> f32d431 (modify test.py)
 
 class You(object):
     def __init__(self):
@@ -431,7 +429,6 @@ class EmailSubscirber(object):
     def update(self):
         print(type(self).__name__, self.publisher.get_news())
 
-<<<<<<< HEAD
 class Wizard(object):
     def __init__(self, rootdir, src):
         self.choices = []
@@ -488,7 +485,6 @@ class Agent(object):
     def placeOrder(self, order):
         self.__orderQueue.append(order)
         order.execute()
-=======
 
 # mvc模型
 # class Model(object):
@@ -588,7 +584,6 @@ class RunApp(tornado.web.Application):
             debug=True
         )
         tornado.web.Application.__init__(self, Handlers, **settings)
->>>>>>> f32d431 (modify test.py)
 
 if __name__ == "__main__":
     # hc1 = HealthCheck()
@@ -620,7 +615,7 @@ if __name__ == "__main__":
     
     # news_publisher.add_news("hello world")
     # news_publisher.notifySubscribers()
-<<<<<<< HEAD
+
 
     # print(news_publisher.subscribers())
 
@@ -630,7 +625,6 @@ if __name__ == "__main__":
     stock = StockTrade()
     buy_stock = BuyStockOrder(stock)
     sell_stock = SellStockOrder(stock)
-=======
 
     # print(news_publisher.subscribers())
 
@@ -641,8 +635,6 @@ if __name__ == "__main__":
     http_server.listen(5000)
     tornado.ioloop.IOLoop.instance().start()
     
->>>>>>> f32d431 (modify test.py)
-
     agent = Agent()
     agent.placeOrder(buy_stock)
     agent.placeOrder(sell_stock)
