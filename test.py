@@ -269,6 +269,7 @@
 
 # 代理模式
 from abc import ABCMeta, abstractmethod
+import abc
 from types import MethodWrapperType
 from typing import Sequence
 
@@ -441,7 +442,7 @@ class Wizard(object):
     def execute(self):
         for choice in self.choices:
             if list(choice.values())[0]:
-                print self.src,self.rootdir
+                print(self.rootdir)
 
             else:
                 print("no")
@@ -585,6 +586,193 @@ class RunApp(tornado.web.Application):
         )
         tornado.web.Application.__init__(self, Handlers, **settings)
 
+
+from abc import abstractclassmethod, ABCMeta
+
+class State(metaclass=ABCMeta):
+
+    @abstractclassmethod
+    def Handler(self):
+        pass
+
+class ConcreteStateB(State):
+
+    def Handler(self):
+        print("ConcreateStateB")
+
+class ConcreteStateA(State):
+
+    def Handler(self):
+        print("ConcreteStateA")
+
+class Context(State):
+
+    def __init__(self):
+        self.state = None
+
+    def getState(self):
+        return self.state
+    
+    def setState(self, state):
+        self.state = state
+
+    def Handler(self):
+        self.state.Handler()
+
+class ComputerState(object):
+    name="state"
+    allowed=[]  
+
+    def switch(self, state):
+        if state.name in self.allowed:
+            print("cureent", self, state.name)
+
+            self.__class__ = state
+
+        else:
+            print(self, state.name)
+
+    def __str__(self):
+        return self.name
+
+class Off(ComputerState):
+    name = 'off'
+    allowed = ["on"]
+
+class On(ComputerState):
+    name = 'on'
+    allowd = ['off', 'suspend', 'hibernate']
+
+class Suspend(ComputerState):
+    name = "suspend"
+    allowed = ['on']
+
+class Computer(object):
+    def __init__(self, model='HP'):
+        self.model = model 
+        self.state = Off()
+
+    def change(self, state):
+        self.state.switch(state)
+
+# 模板方法模式
+from abc import ABCMeta, abstractclassmethod
+
+class Compiler(metaclass=ABCMeta):
+    
+    @abstractclassmethod
+    def collectSource(self):
+        pass
+
+    @abstractclassmethod
+    def compileToObject(self):
+        pass
+
+    @abstractclassmethod
+    def run(self):
+        pass
+
+    def compileAndRun(self):
+        self.collectSource()
+        self.compileToObject()
+        self.run()
+
+class iOSCompiler(Compiler):
+
+    def collectSource(self):
+        print("collection ios")
+
+    def compileToObject(self):
+        print("compile ios")
+
+    def run(self):
+        print("run elements")
+
+class Client:
+
+    def main(self):
+        self.concreate = iOSCompiler()
+        self.concreate.compileAndRun()
+
+
+from abc import abstractclassmethod, ABCMeta
+
+class Trip(metaclass=ABCMeta):
+
+    @abstractclassmethod
+    def setTransport(self):
+        pass
+
+    @abstractclassmethod
+    def day1(self):
+        pass
+    
+    @abstractclassmethod
+    def day2(self):
+        pass
+
+    @abstractclassmethod
+    def day3(self):
+        pass
+    
+    @abstractclassmethod
+    def returnHome(self):
+        pass
+
+
+    def itinerary(self):
+        self.setTransport()
+        self.day1()
+        self.day2()
+        self.day3()
+        self.returnHome()
+
+class VeniceTrip(Trip):
+
+    def setTransport(self):
+        print("set Transport")
+
+    def day1(self):
+        print("transport day1")
+
+    def day2(self):
+        print("transport day2")
+
+    def day3(self):
+        print("transport day3")
+
+    def returnHome(self):
+        print("transport return home")
+
+class MaldivesTrip(Trip):
+
+    def setTransport(self):
+        print("on foot, on any island, Wow")
+
+    def day1(self):
+        print("MaldivesTrip day1")
+
+    def day2(self):
+        print("MaldivesTrip day2")
+
+    def day3(self):
+        print("MaldivesTrip day3")
+
+    def returnHome(self):
+        print("MaldivesTrip return Home")
+
+class TravelAgency(object):
+
+    def arrange_trip(self):
+        choice = input("input type: ")
+        if choice == "historical":
+            self.trip = VeniceTrip()
+            self.trip.itinerary()
+        
+        elif choice == "beach":
+            self.trip = MaldivesTrip()
+            self.trip.itinerary()
+    
 if __name__ == "__main__":
     # hc1 = HealthCheck()
     # hc2 = HealthCheck()
@@ -622,19 +810,45 @@ if __name__ == "__main__":
     # news_publisher.add_news("hello world2")
     # news_publisher.notifySubscribers()
 
-    stock = StockTrade()
-    buy_stock = BuyStockOrder(stock)
-    sell_stock = SellStockOrder(stock)
+    # stock = StockTrade()
+    # buy_stock = BuyStockOrder(stock)
+    # sell_stock = SellStockOrder(stock)
 
-    # print(news_publisher.subscribers())
+    # # print(news_publisher.subscribers())
 
-    # news_publisher.add_news("hello world2")
-    # news_publisher.notifySubscribers()
-    print("开始运行")
-    http_server = tornado.httpserver.HTTPServer(RunApp())
-    http_server.listen(5000)
-    tornado.ioloop.IOLoop.instance().start()
+    # # news_publisher.add_news("hello world2")
+    # # news_publisher.notifySubscribers()
+    # print("开始运行")
+    # http_server = tornado.httpserver.HTTPServer(RunApp())
+    # http_server.listen(5000)
+    # tornado.ioloop.IOLoop.instance().start()
     
-    agent = Agent()
-    agent.placeOrder(buy_stock)
-    agent.placeOrder(sell_stock)
+    # agent = Agent()
+    # agent.placeOrder(buy_stock)
+    # agent.placeOrder(sell_stock)
+
+    # context = Context()
+    # stateB = ConcreteStateB()
+    # stateA = ConcreteStateA()
+
+    # context.setState(stateA)
+    # context.Handler()
+
+    # comp = Computer()
+    # comp.change(On)
+    # comp.change(Off)
+    # comp.change(On)
+    # # comp.change(Suspend)
+    # # # comp.change(Hibernate)
+    # comp.change(On)
+    # comp.change(Off)
+    
+    # 运行
+    # ios = iOSCompiler()
+    # ios.compileAndRun()
+
+    # client = Client()
+    # client.main()
+
+    TravelAgency().arrange_trip()
+
